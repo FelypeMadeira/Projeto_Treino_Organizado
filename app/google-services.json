@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1029019613702",
+    "project_id": "treino-organizado-e2452",
+    "storage_bucket": "treino-organizado-e2452.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1029019613702:android:aec4e397138126d10e6187",
+        "android_client_info": {
+          "package_name": "com.example.treinoorganizado"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDFZ3a5hRYfN1SolckjUX0MQYaz-m9IWCs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
