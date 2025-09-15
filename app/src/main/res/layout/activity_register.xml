@@ -95,34 +95,13 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/emailRegistro" />
 
-    <EditText
-        android:id="@+id/confirmeSenha"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        android:ems="10"
-        android:inputType="textPassword"
-        android:fontFamily="monospace"
-        android:padding="10dp"
-        android:textColor="#040404"
-        android:textSize="13sp"
-        android:background="@color/white"
-        android:textColorHint="#040404"
-        android:hint="Confirme Sua Senha"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/senhaRegistro" />
-
-
 
     <Button
         android:id="@+id/registrarBtn"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
         android:background="@color/meu_vermelho"
         android:text="Registre-se"
@@ -130,7 +109,7 @@
         android:textSize="13sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/confirmeSenha" />
+        app:layout_constraintTop_toBottomOf="@+id/senhaRegistro" />
 
     <TextView
         android:id="@+id/registroTexto"
@@ -147,11 +126,10 @@
         android:id="@+id/textViewError"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text="As senhas não coincidem."
         android:textColor="@android:color/holo_red_dark"
         android:visibility="gone"
-        android:text="As senhas não coincidem."
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/confirmeSenha" />
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

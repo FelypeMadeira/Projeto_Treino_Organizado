@@ -25,7 +25,7 @@ import com.google.firebase.auth.FirebaseAuth;
 
 public class Register extends AppCompatActivity {
 
-    EditText nomeCompleto,emailRegistro,senhaRegistro, confirmeSenha;
+    EditText nomeCompleto,emailRegistro,senhaRegistro ;
     Button registrarBtn;
     TextView registroTexto, textViewError;
     FirebaseAuth fAuth;
@@ -37,34 +37,21 @@ public class Register extends AppCompatActivity {
         nomeCompleto = findViewById(R.id.nomeCompleto);
         emailRegistro= findViewById(R.id.emailRegistro);
         senhaRegistro= findViewById(R.id.senhaRegistro);
-        confirmeSenha= findViewById(R.id.confirmeSenha);
+
         registrarBtn = findViewById(R.id.registrarBtn);
         registroTexto= findViewById(R.id.registroTexto);
 
 
+        registroTexto.setOnClickListener(v -> {
+            Intent intent = new Intent(Register.this, Login.class);
+            startActivity(intent);
+        });
+
         fAuth = FirebaseAuth.getInstance();
 
-        if (fAuth.getCurrentUser() != null){
-            startActivity(new Intent(getApplicationContext(),MainActivity.class));
-            finish();
-        }
 
-        confirmeSenha.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
-            }
 
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-             validarSenha();
-            }
-        });
 
 
 
@@ -114,14 +101,5 @@ public class Register extends AppCompatActivity {
         });
 
     }
-    private void validarSenha() {
-        String senha = senhaRegistro.getText().toString();
-        String verificar= confirmeSenha.getText().toString();
 
-        if(senha.equals(verificar)){
-            textViewError.setVisibility(View.GONE);
-        }else {
-            textViewError.setVisibility(View.VISIBLE);
-        }
     }
-}
