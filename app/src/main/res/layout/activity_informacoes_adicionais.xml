@@ -22,7 +22,7 @@
         app:layout_constraintVertical_bias="0.16000003" />
 
     <EditText
-        android:id="@+id/editTextText"
+        android:id="@+id/rAltura"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -40,7 +40,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textView4" />
 
     <EditText
-        android:id="@+id/editTextText2"
+        android:id="@+id/rPeso"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -56,29 +56,29 @@
         android:textSize="13sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextText" />
+        app:layout_constraintTop_toBottomOf="@+id/rAltura" />
 
     <EditText
-        android:id="@+id/editTextText3"
+        android:id="@+id/rObjetivo"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
-        android:ems="10"
         android:background="@color/white"
+        android:ems="10"
         android:fontFamily="monospace"
+        android:hint="Objetivo de Treino"
         android:inputType="text"
-        android:hint="Gordura corporal"
         android:padding="10dp"
         android:textColorHint="#040404"
         android:textSize="13sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextText2" />
+        app:layout_constraintTop_toBottomOf="@+id/rPeso" />
 
     <EditText
-        android:id="@+id/editTextText4"
+        android:id="@+id/rIdade"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -94,22 +94,23 @@
         android:textSize="13sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextText3" />
+        app:layout_constraintTop_toBottomOf="@+id/rObjetivo" />
 
     <!-- RadioGroup de Sexo Biológico -->
     <RadioGroup
         android:id="@+id/sexoGroup"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="205dp"
+        android:layout_height="45dp"
         android:layout_marginTop="32dp"
         android:background="@color/white"
         android:fontFamily="monospace"
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.08"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextText4"
-        app:layout_constraintVertical_bias="0.04000002">
+        app:layout_constraintTop_toBottomOf="@+id/rIdade"
+        app:layout_constraintVertical_bias="0.0">
 
         <RadioButton
             android:id="@+id/sexoMasculino"
@@ -123,5 +124,43 @@
             android:layout_height="wrap_content"
             android:text="Feminino" />
     </RadioGroup>
+    <Button
+        android:id="@+id/btnSalvar"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Salvar Dados"
+        android:layout_margin="16dp"
+        android:backgroundTint="@color/meu_vermelho"
+        app:layout_constraintTop_toBottomOf="@+id/sexoGroup"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <TextView
+        android:id="@+id/textView5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="monospace"
+        android:text="Sexo Biologico"
+        android:textColor="#FFFFFF"
+        app:layout_constraintBottom_toTopOf="@+id/sexoGroup"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.06"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/rIdade"
+        app:layout_constraintVertical_bias="0.92" />
+
+    <TextView
+        android:id="@+id/textoDados"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="monospace"
+        android:text="Voltar pra tela Inicial"
+        android:textColor="#FF0202"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnSalvar"
+        app:layout_constraintVertical_bias="0.18" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
