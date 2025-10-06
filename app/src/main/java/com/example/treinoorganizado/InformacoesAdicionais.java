@@ -20,12 +20,14 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
 public class InformacoesAdicionais extends AppCompatActivity {
 
-    private EditText rAltura, rPeso, rObjetivo,rIdade;
+    private EditText rAltura, rPeso, rObjetivo,rIdade,rPeito,rCintura,rQuadril,rBraco,rCoxa;
     private RadioGroup sexoGroup;
     private Button btnSalvar;
     private TextView textoDados;
@@ -47,8 +49,14 @@ public class InformacoesAdicionais extends AppCompatActivity {
         rPeso = findViewById(R.id.rPeso);
         rObjetivo = findViewById(R.id.rObjetivo);
         rIdade = findViewById(R.id.rIdade);
+        rPeito = findViewById(R.id.rPeito);
+        rCintura = findViewById(R.id.rCintura);
+        rQuadril = findViewById(R.id.rQuadril);
+        rBraco = findViewById(R.id.rBraco);
+        rCoxa = findViewById(R.id.rCoxa);
         sexoGroup = findViewById(R.id.sexoGroup);
         btnSalvar = findViewById(R.id.btnSalvar);
+
 
 
 
@@ -90,6 +98,11 @@ public class InformacoesAdicionais extends AppCompatActivity {
         String pesoS = rPeso.getText().toString().trim();
         String objetivoS = rObjetivo.getText().toString().trim();
         String idadeS = rIdade.getText().toString().trim();
+        String peitoS = rPeito.getText().toString().trim();
+        String cinturaS = rCintura.getText().toString().trim();
+        String quadrilS = rQuadril.getText().toString().trim();
+        String bracoS = rBraco.getText().toString().trim();
+        String coxaS= rCoxa.getText().toString().trim();
 
         int selectedId= sexoGroup.getCheckedRadioButtonId();
         RadioButton radioSelecionado = findViewById(selectedId);
@@ -97,18 +110,40 @@ public class InformacoesAdicionais extends AppCompatActivity {
 
 
         Map<String, Object> dados = new HashMap<>();
-        if (!alturaS.isEmpty()) dados.put("altura",Double.parseDouble(alturaS)/100);
-        if (!pesoS.isEmpty())dados.put("peso",Double.parseDouble(pesoS));
-        if (!idadeS.isEmpty())dados.put("idade",Integer.parseInt(idadeS));
         if (!objetivoS.isEmpty())dados.put("objetivo_treino", objetivoS);
         if (!sexoBiologico.isEmpty()) dados.put("sexo_biologico", sexoBiologico);
 
 
-        db.collection("Usuarios").document(userID).set(dados, com.google.firebase.firestore.SetOptions.merge())
+
+        db.collection("Usuarios").document(userID).update("dadosAtuais", dados)
                 .addOnSuccessListener(aVoid ->
-                        Toast.makeText(InformacoesAdicionais.this, "Dados salvos com sucesso!", Toast.LENGTH_SHORT).show())
+                        Toast.makeText(InformacoesAdicionais.this,"Dados atuais salvos!", Toast.LENGTH_SHORT).show())
                 .addOnFailureListener(e ->
-                        Toast.makeText(InformacoesAdicionais.this, "Erro: " + e.getMessage(), Toast.LENGTH_SHORT).show());
+                        Toast.makeText(InformacoesAdicionais.this,"Erro ao salvar atuais: "+e.getMessage(),Toast.LENGTH_SHORT).show());
+
+
+        String timestamp = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss").format(new Date());
+
+
+        Map<String, Object> medidas = new HashMap<>();
+        if (!alturaS.isEmpty()) medidas.put("altura",Double.parseDouble(alturaS)/100);
+        if (!pesoS.isEmpty())medidas.put("peso",Double.parseDouble(pesoS));
+        if (!idadeS.isEmpty())medidas.put("idade",Integer.parseInt(idadeS));
+
+        if (!peitoS.isEmpty()) medidas.put("peito", Integer.parseInt(peitoS));
+        if (!cinturaS.isEmpty()) medidas.put("cintura", Integer.parseInt(cinturaS));
+        if (!quadrilS.isEmpty()) medidas.put("quadril", Integer.parseInt(quadrilS));
+        if (!bracoS.isEmpty()) medidas.put("braco", Integer.parseInt(bracoS));
+        if (!coxaS.isEmpty()) medidas.put("coxa", Integer.parseInt(coxaS));
+
+        db.collection("Usuarios").document(userID)
+                .collection("medidas")
+                .document(timestamp)  // cada medida será um documento com data/hora
+                .set(medidas)
+                .addOnSuccessListener(aVoid ->
+                        Toast.makeText(InformacoesAdicionais.this,"Histórico atualizado!", Toast.LENGTH_SHORT).show())
+                .addOnFailureListener(e ->
+                        Toast.makeText(InformacoesAdicionais.this,"Erro no histórico: "+e.getMessage(),Toast.LENGTH_SHORT).show());
 
 
     }

@@ -19,98 +19,170 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.16000003" />
+        app:layout_constraintVertical_bias="0.10" />
 
     <EditText
         android:id="@+id/rAltura"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:ems="10"
+        android:layout_margin="16dp"
         android:background="@color/white"
         android:fontFamily="monospace"
-        android:inputType="text"
-        android:padding="10dp"
-        android:textColorHint="#040404"
-        android:textSize="13sp"
         android:hint="Altura em cm"
+        android:inputType="number"
+        android:padding="10dp"
+        android:textColor="@color/black"
+        android:textSize="13sp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView4" />
+        app:layout_constraintTop_toBottomOf="@id/textView4"
+        app:layout_constraintVertical_bias="0.0" />
 
     <EditText
         android:id="@+id/rPeso"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        android:ems="10"
-        android:inputType="text"
+        android:layout_margin="16dp"
+        android:background="@color/white"
+        android:fontFamily="monospace"
         android:hint="Peso em kg"
-        android:background="@color/white"
-        android:fontFamily="monospace"
+        android:textColor="@color/black"
+        android:inputType="numberDecimal"
         android:padding="10dp"
-        android:textColorHint="#040404"
         android:textSize="13sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/rAltura" />
-
-    <EditText
-        android:id="@+id/rObjetivo"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        android:background="@color/white"
-        android:ems="10"
-        android:fontFamily="monospace"
-        android:hint="Objetivo de Treino"
-        android:inputType="text"
-        android:padding="10dp"
-        android:textColorHint="#040404"
-        android:textSize="13sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/rPeso" />
+        app:layout_constraintTop_toBottomOf="@id/rAltura" />
 
     <EditText
         android:id="@+id/rIdade"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        android:ems="10"
+        android:layout_margin="16dp"
         android:background="@color/white"
         android:fontFamily="monospace"
-        android:inputType="text"
         android:hint="Idade"
+        android:textColor="@color/black"
+        android:inputType="number"
         android:padding="10dp"
-        android:textColorHint="#040404"
         android:textSize="13sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/rObjetivo" />
+        app:layout_constraintTop_toBottomOf="@id/rPeso" />
 
-    <!-- RadioGroup de Sexo Biológico -->
-    <RadioGroup
-        android:id="@+id/sexoGroup"
-        android:layout_width="205dp"
-        android:layout_height="45dp"
-        android:layout_marginTop="32dp"
+    <EditText
+        android:id="@+id/rObjetivo"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
         android:background="@color/white"
         android:fontFamily="monospace"
-        android:orientation="horizontal"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:hint="Objetivo de Treino"
+        android:textColor="@color/black"
+        android:inputType="text"
+        android:padding="10dp"
+        android:textSize="13sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.08"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/rIdade"
-        app:layout_constraintVertical_bias="0.0">
+        app:layout_constraintTop_toBottomOf="@id/rIdade" />
+
+    <!-- Campos adicionais de medidas -->
+    <EditText
+        android:id="@+id/rPeito"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:background="@color/white"
+        android:hint="Peito (cm)"
+        android:textColor="@color/black"
+        android:inputType="number"
+        android:padding="10dp"
+        app:layout_constraintTop_toBottomOf="@id/rObjetivo"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <EditText
+        android:id="@+id/rCintura"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:background="@color/white"
+        android:hint="Cintura (cm)"
+        android:textColor="@color/black"
+        android:inputType="number"
+        android:padding="10dp"
+        app:layout_constraintTop_toBottomOf="@id/rPeito"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <EditText
+        android:id="@+id/rQuadril"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:background="@color/white"
+        android:hint="Quadril (cm)"
+        android:textColor="@color/black"
+        android:inputType="number"
+        android:padding="10dp"
+        app:layout_constraintTop_toBottomOf="@id/rCintura"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <EditText
+        android:id="@+id/rBraco"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:background="@color/white"
+        android:hint="Braço (cm)"
+        android:textColor="@color/black"
+        android:inputType="number"
+        android:padding="10dp"
+        app:layout_constraintTop_toBottomOf="@id/rQuadril"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <EditText
+        android:id="@+id/rCoxa"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:background="@color/white"
+        android:hint="Coxa (cm)"
+        android:textColor="@color/black"
+        android:inputType="number"
+        android:padding="10dp"
+        app:layout_constraintTop_toBottomOf="@id/rBraco"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+
+    <TextView
+        android:id="@+id/textView5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:fontFamily="monospace"
+        android:text="Sexo Biológico"
+        android:textColor="#FFFFFF"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.06"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/rCoxa" />
+
+
+    <RadioGroup
+        android:id="@+id/sexoGroup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.07"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textView5">
 
         <RadioButton
             android:id="@+id/sexoMasculino"
@@ -124,30 +196,19 @@
             android:layout_height="wrap_content"
             android:text="Feminino" />
     </RadioGroup>
+
     <Button
         android:id="@+id/btnSalvar"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Salvar Dados"
         android:layout_margin="16dp"
         android:backgroundTint="@color/meu_vermelho"
-        app:layout_constraintTop_toBottomOf="@+id/sexoGroup"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
-
-    <TextView
-        android:id="@+id/textView5"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="monospace"
-        android:text="Sexo Biologico"
-        android:textColor="#FFFFFF"
-        app:layout_constraintBottom_toTopOf="@+id/sexoGroup"
+        android:text="Salvar Dados"
+        android:textColor="@android:color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.06"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/rIdade"
-        app:layout_constraintVertical_bias="0.92" />
+        app:layout_constraintTop_toBottomOf="@id/sexoGroup" />
 
     <TextView
         android:id="@+id/textoDados"
@@ -156,11 +217,9 @@
         android:fontFamily="monospace"
         android:text="Voltar pra tela Inicial"
         android:textColor="#FF0202"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btnSalvar"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnSalvar"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintVertical_bias="0.18" />
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>
