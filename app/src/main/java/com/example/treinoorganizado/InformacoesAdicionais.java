@@ -2,7 +2,6 @@ package com.example.treinoorganizado;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
@@ -19,15 +18,17 @@ import androidx.core.view.WindowInsetsCompat;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.SetOptions;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 public class InformacoesAdicionais extends AppCompatActivity {
 
-    private EditText rAltura, rPeso, rObjetivo,rIdade,rPeito,rCintura,rQuadril,rBraco,rCoxa;
+    private EditText rAltura, rPeso, rObjetivo, rIdade, rPeito, rCintura, rQuadril, rBraco, rCoxa;
     private RadioGroup sexoGroup;
     private Button btnSalvar;
     private TextView textoDados;
@@ -44,7 +45,7 @@ public class InformacoesAdicionais extends AppCompatActivity {
         db = FirebaseFirestore.getInstance();
         mAuth = FirebaseAuth.getInstance();
 
-        textoDados= findViewById(R.id.textoDados);
+        textoDados = findViewById(R.id.textoDados);
         rAltura = findViewById(R.id.rAltura);
         rPeso = findViewById(R.id.rPeso);
         rObjetivo = findViewById(R.id.rObjetivo);
@@ -57,26 +58,13 @@ public class InformacoesAdicionais extends AppCompatActivity {
         sexoGroup = findViewById(R.id.sexoGroup);
         btnSalvar = findViewById(R.id.btnSalvar);
 
-
-
-
-        textoDados.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                Intent intent = new Intent(InformacoesAdicionais.this, MainActivity.class);
-                startActivity(intent);
-                finish();
-            }
+        textoDados.setOnClickListener(v -> {
+            Intent intent = new Intent(InformacoesAdicionais.this, MainActivity.class);
+            startActivity(intent);
+            finish();
         });
 
-
-        btnSalvar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                salvarDados();
-            }
-        });
+        btnSalvar.setOnClickListener(v -> salvarDados());
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
@@ -85,15 +73,20 @@ public class InformacoesAdicionais extends AppCompatActivity {
         });
     }
 
-    private void salvarDados(){
-        FirebaseUser user= mAuth.getCurrentUser();
+    // ============================================================
+    // Método principal de salvamento
+    // ============================================================
+    private void salvarDados() {
+        FirebaseUser user = mAuth.getCurrentUser();
 
-        if (user == null){
+        if (user == null) {
             Toast.makeText(this, "Usuário não autenticado!", Toast.LENGTH_SHORT).show();
             return;
         }
+
         String userID = user.getUid();
 
+        // ----------- Captura os valores dos campos -----------------
         String alturaS = rAltura.getText().toString().trim();
         String pesoS = rPeso.getText().toString().trim();
         String objetivoS = rObjetivo.getText().toString().trim();
@@ -102,49 +95,67 @@ public class InformacoesAdicionais extends AppCompatActivity {
         String cinturaS = rCintura.getText().toString().trim();
         String quadrilS = rQuadril.getText().toString().trim();
         String bracoS = rBraco.getText().toString().trim();
-        String coxaS= rCoxa.getText().toString().trim();
+        String coxaS = rCoxa.getText().toString().trim();
 
-        int selectedId= sexoGroup.getCheckedRadioButtonId();
+        int selectedId = sexoGroup.getCheckedRadioButtonId();
         RadioButton radioSelecionado = findViewById(selectedId);
-        String sexoBiologico = (radioSelecionado != null) ? radioSelecionado.getText().toString() :"";
+        String sexoBiologico = (radioSelecionado != null) ? radioSelecionado.getText().toString() : "";
 
+        // ============================================================
+        // 1️⃣ Atualiza "dadosAtuais" no documento principal
+        // ============================================================
+        Map<String, Object> dadosAtuais = new HashMap<>();
+        if (!objetivoS.isEmpty()) dadosAtuais.put("objetivo_treino", objetivoS);
+        if (!sexoBiologico.isEmpty()) dadosAtuais.put("sexo_biologico", sexoBiologico);
+        if (!alturaS.isEmpty()) dadosAtuais.put("altura", Double.parseDouble(alturaS) / 100);
+        if (!pesoS.isEmpty()) dadosAtuais.put("peso", Double.parseDouble(pesoS));
+        if (!idadeS.isEmpty()) dadosAtuais.put("idade", Integer.parseInt(idadeS));
 
-        Map<String, Object> dados = new HashMap<>();
-        if (!objetivoS.isEmpty())dados.put("objetivo_treino", objetivoS);
-        if (!sexoBiologico.isEmpty()) dados.put("sexo_biologico", sexoBiologico);
+        db.collection("Usuarios").document(userID)
+                .set(Map.of("dadosAtuais", dadosAtuais), SetOptions.merge())
+                .addOnSuccessListener(aVoid -> {
+                    Toast.makeText(this, "Dados atuais atualizados!", Toast.LENGTH_SHORT).show();
 
-
-
-        db.collection("Usuarios").document(userID).update("dadosAtuais", dados)
-                .addOnSuccessListener(aVoid ->
-                        Toast.makeText(InformacoesAdicionais.this,"Dados atuais salvos!", Toast.LENGTH_SHORT).show())
+                    // Após atualizar o documento principal, salva o histórico
+                    salvarMedidas(userID, alturaS, pesoS, idadeS, peitoS, cinturaS, quadrilS, bracoS, coxaS);
+                })
                 .addOnFailureListener(e ->
-                        Toast.makeText(InformacoesAdicionais.this,"Erro ao salvar atuais: "+e.getMessage(),Toast.LENGTH_SHORT).show());
+                        Toast.makeText(this, "Erro ao salvar dados atuais: " + e.getMessage(), Toast.LENGTH_SHORT).show());
+    }
 
-
-        String timestamp = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss").format(new Date());
-
+    // ============================================================
+    // 2️⃣ Salva o histórico de medidas em subcoleção
+    // ============================================================
+    private void salvarMedidas(String userID, String alturaS, String pesoS, String idadeS,
+                               String peitoS, String cinturaS, String quadrilS, String bracoS, String coxaS) {
 
         Map<String, Object> medidas = new HashMap<>();
-        if (!alturaS.isEmpty()) medidas.put("altura",Double.parseDouble(alturaS)/100);
-        if (!pesoS.isEmpty())medidas.put("peso",Double.parseDouble(pesoS));
-        if (!idadeS.isEmpty())medidas.put("idade",Integer.parseInt(idadeS));
 
+        if (!alturaS.isEmpty()) medidas.put("altura", Double.parseDouble(alturaS) / 100);
+        if (!pesoS.isEmpty()) medidas.put("peso", Double.parseDouble(pesoS));
+        if (!idadeS.isEmpty()) medidas.put("idade", Integer.parseInt(idadeS));
         if (!peitoS.isEmpty()) medidas.put("peito", Integer.parseInt(peitoS));
         if (!cinturaS.isEmpty()) medidas.put("cintura", Integer.parseInt(cinturaS));
         if (!quadrilS.isEmpty()) medidas.put("quadril", Integer.parseInt(quadrilS));
         if (!bracoS.isEmpty()) medidas.put("braco", Integer.parseInt(bracoS));
         if (!coxaS.isEmpty()) medidas.put("coxa", Integer.parseInt(coxaS));
 
+        if (medidas.isEmpty()) {
+            Toast.makeText(this, "Nenhum dado de medida informado, salvando mesmo assim.", Toast.LENGTH_SHORT).show();
+        }
+
+
+        // Adiciona um campo de data/hora legível
+        String timestamp = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss", Locale.getDefault()).format(new Date());
+        medidas.put("data_registro", timestamp);
+
         db.collection("Usuarios").document(userID)
                 .collection("medidas")
-                .document(timestamp)  // cada medida será um documento com data/hora
+                .document(timestamp)
                 .set(medidas)
                 .addOnSuccessListener(aVoid ->
-                        Toast.makeText(InformacoesAdicionais.this,"Histórico atualizado!", Toast.LENGTH_SHORT).show())
+                        Toast.makeText(this, "Histórico de medidas salvo com sucesso!", Toast.LENGTH_SHORT).show())
                 .addOnFailureListener(e ->
-                        Toast.makeText(InformacoesAdicionais.this,"Erro no histórico: "+e.getMessage(),Toast.LENGTH_SHORT).show());
-
-
+                        Toast.makeText(this, "Erro ao salvar histórico: " + e.getMessage(), Toast.LENGTH_SHORT).show());
     }
 }
