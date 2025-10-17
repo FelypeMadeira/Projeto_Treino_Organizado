@@ -16,14 +16,14 @@ import com.google.firebase.Firebase;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class MainActivity extends AppCompatActivity {
-    Button dadosBtn;
+    Button dadosBtn, evoBtn;
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
-
+        evoBtn = findViewById(R.id.evoBtn);
         dadosBtn = findViewById(R.id.dadosBtn);
         dadosBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -38,6 +38,14 @@ public class MainActivity extends AppCompatActivity {
                     v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
                     return insets;
                 });
+        evoBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, MostrarResultados.class);
+                startActivity(intent);
+                finish();
+            }
+        });
 
 
     }

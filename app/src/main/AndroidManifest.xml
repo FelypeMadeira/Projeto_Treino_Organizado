@@ -15,6 +15,12 @@
         android:theme="@style/Theme.TreinoOrganizado"
         tools:targetApi="31">
         <activity
+            android:name=".item_medida"
+            android:exported="false" />
+        <activity
+            android:name=".MostrarResultados"
+            android:exported="false" />
+        <activity
             android:name=".InformacoesAdicionais"
             android:exported="false" />
         <activity
