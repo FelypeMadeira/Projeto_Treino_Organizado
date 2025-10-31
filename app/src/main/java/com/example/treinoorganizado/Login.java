@@ -25,7 +25,7 @@ public class Login extends AppCompatActivity {
 
     EditText email, senha;
     Button loginBtn;
-    TextView loginTexto;
+    TextView loginTexto, txtEsqueciSenha ;
     FirebaseAuth fAuth;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +46,13 @@ public class Login extends AppCompatActivity {
             startActivity(new Intent(getApplicationContext(),MainActivity.class));
             finish();
         }
+
+        txtEsqueciSenha = findViewById(R.id.txtEsqueciSenha);
+
+       txtEsqueciSenha.setOnClickListener(v -> {
+            Intent intent = new Intent(Login.this, EsqueciSenha.class);
+            startActivity(intent);
+        });
 
 
         loginBtn.setOnClickListener(new View.OnClickListener() {

@@ -15,6 +15,9 @@
         android:theme="@style/Theme.TreinoOrganizado"
         tools:targetApi="31">
         <activity
+            android:name=".EsqueciSenha"
+            android:exported="false" />
+        <activity
             android:name=".item_medida"
             android:exported="false" />
         <activity

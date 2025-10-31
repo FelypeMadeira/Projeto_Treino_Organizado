@@ -10,8 +10,8 @@
 
     <LinearLayout
         android:id="@+id/main"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="420dp"
+        android:layout_height="738dp"
         android:background="@drawable/background"
         android:orientation="vertical"
         android:padding="16dp"
@@ -23,7 +23,7 @@
 
         <TextView
             android:id="@+id/titulo"
-            android:layout_width="match_parent"
+            android:layout_width="332dp"
             android:layout_height="wrap_content"
             android:fontFamily="monospace"
             android:gravity="center"
@@ -35,20 +35,19 @@
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerMedidas"
-            android:layout_width="378dp"
+            android:layout_width="333dp"
             android:layout_height="502dp" />
 
         <Button
             android:id="@+id/voltaBtn"
-            android:layout_width="match_parent"
+            android:layout_width="333dp"
             android:layout_height="wrap_content"
-            android:text="Voltar"
-            android:textAllCaps="false"
-            android:textColor="@color/white"
             android:backgroundTint="@color/meu_vermelho"
             android:fontFamily="sans-serif-medium"
             android:padding="10dp"
-             />
+            android:text="Voltar"
+            android:textAllCaps="false"
+            android:textColor="@color/white" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
